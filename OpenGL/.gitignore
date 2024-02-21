@@ -1,3 +1,6 @@
+*.vs
+*64
+
 # Prerequisites
 *.d
 
