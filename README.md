@@ -42,6 +42,7 @@ This guide will help you quickly set up your development environment by copying 
 
 ## Additional Notes
 
+- **Download Files**: If you don't want to clone the repository, You can always just download the code in a `.zip` file.
 - **Visual Studio Versions**: Make sure to choose the correct library folder corresponding to your version of Visual Studio to avoid compatibility issues.
 - **Troubleshooting**: If you encounter any issues with dependencies or setup, feel free to reach out for assistance.
 
