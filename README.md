@@ -36,7 +36,19 @@ This guide will help you quickly set up your development environment by copying 
     - Paste the copied library folder into the "Dependencies" folder.
     - Rename the pasted folder to "lib".
 
-5. **You're Ready to Go!**:
+5. **Change Version**:
+    - If you are using Visual Studio 2022, You do not need to do this step.
+    - Now Open your `OpenGL.sln` file in visual studio.
+    - You'll have 2 projects.
+          `1. WindowCreation and 
+          2. TriangleRender`
+    - For both of these projects right click and go to the properties.
+    - Under `Configuration Properties` click on the `General` tab.
+    - In the `General Properties` you'll see a property called `Platform Toolset`.
+    - By default it will be set to `v(143)` (This is because I'm using visual studio 2022 to run this project.)
+    - You can click on the field and use the dropdown and select your Visual Studio version there.
+
+7. **You're Ready to Go!**:
     - Your project is now configured with the necessary dependencies.
     - You can start working on your project without worrying about setting up dependencies.
 
