@@ -15,7 +15,7 @@ This guide will help you quickly set up your development environment by copying 
     - Clone this repository to your local machine:
 
     ```bash
-    git clone https://github.com/your-username/your-repository.git
+    git clone https://github.com/Xplosiveginger/ComputerGraphics_OpenGL.git
     ```
 
     - If you are using github desktop, you can straight up just clone the repo.
