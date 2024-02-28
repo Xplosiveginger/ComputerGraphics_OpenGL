@@ -39,10 +39,10 @@ This guide will help you quickly set up your development environment by copying 
 5. **Change Version**:
     - If you are using Visual Studio 2022, You do not need to do this step.
     - Now Open your `OpenGL.sln` file in visual studio.
-    - You'll have 2 projects.
+    - You'll have some projects. eg:-
           `1. WindowCreation and 
           2. TriangleRender`
-    - For both of these projects right click and go to the properties.
+    - For all of the projects right click and go to the properties.
     - Under `Configuration Properties` click on the `General` tab.
     - In the `General Properties` you'll see a property called `Platform Toolset`.
     - By default it will be set to `v(143)` (This is because I'm using visual studio 2022 to run this project.)
