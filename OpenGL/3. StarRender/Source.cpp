@@ -49,7 +49,7 @@ int main()
 	Shader TriShader2 = Shader("vertex.shader", "fragment_two.shader");
 
 	float vertices[] = {
-		0.0f, 0.8f, 0.0f,
+		0.0f, 0.8f, 0.0f, //stride
 		0.3f, 0.3f, 0.0f,
 		0.0f, 0.0f, 0.0f,
 
