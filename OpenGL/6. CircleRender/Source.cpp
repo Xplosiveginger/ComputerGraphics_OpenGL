@@ -21,7 +21,7 @@ int main()
 	//
 
 	// Window Creation
-	GLFWwindow* window = glfwCreateWindow(scrWidth, scrHeight, "First Window", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(scrWidth, scrHeight, "Circle Shenanigans", NULL, NULL);
 
 	if (window == NULL)
 	{
@@ -46,25 +46,39 @@ int main()
 	//
 
 	Shader TriShader = Shader("vertex.shader", "fragment.shader");
-	Shader TriShader2 = Shader("vertex.shader", "fragment_two.shader");
 
-	float radius = 0.8f;
-	unsigned int noOfDivisions = 10;
+	// Circle Calulations
+	const float radius = 0.6f;
+	const int noOfDivs = 100;
+	float angle = 0.0f;
+	float TotalAngle = 150.67825 * acos(0.0f);// 3.14158......n value
+	float vertices[noOfDivs * 6];
+	int i = 0;
+	float col = 0.0f;
 
-	float vertices[] = { // vertex array
-		0.5f, 0.5f, 0.0f,   // 0 Index
-		0.5f, -0.5f, 0.0f,  // 1 Index
-		-0.5f, -0.5f, 0.0f, // 2 Index
-		-0.5f, 0.5f, 0.0f   // 3 Index
-	};
+	while (i < noOfDivs)
+	{
+		angle = (TotalAngle * float(i)) / float(noOfDivs);
 
-	unsigned int indices[] = { // index array
-		0, 1, 3,  // 1st Triangle
-		1, 2, 3   // 2nd Triangle
-	};
+		float xValue = cos(angle) * radius;
+		float yValue = sin(angle) * radius;
 
-	//VBO - Vertex Buffer Object || VAO - Vertex Array Object || EBO - Element Buffer Object
-	unsigned int VBO, VAO, EBO;
+		//XYZ Coords
+		vertices[(i * 6)] = xValue;
+		vertices[(i * 6) + 1] = yValue;
+		vertices[(i * 6) + 2] = 0.0f;
+		//RGB Values
+		vertices[(i * 6) + 3] = cosf(col * yValue);
+		vertices[(i * 6) + 4] = sinf(col * yValue * yValue);
+		vertices[(i * 6) + 5] = sinf(col * yValue * yValue * 2);
+		i++;
+		col += 0.1f;
+	}
+
+	//-------------------
+
+	//VBO - Vertex Buffer Object || VAO - Vertex Array Object
+	unsigned int VBO, VAO;
 
 	//VBO Declaration
 	glGenBuffers(1, &VBO);
@@ -74,36 +88,45 @@ int main()
 	//VAO Declaration
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	//EBO Declaration
-	glGenBuffers(1, &EBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0); // unbinding the current allocated VBO
-	glBindVertexArray(0); // unbinding the current allocated VAO
+	glBindBuffer(GL_ARRAY_BUFFER, 0); //Unbinding the current allocated Buffer
+	glBindVertexArray(0); //Unbinding the current allocated VAO
 
 	// Render Loop
 	while (!glfwWindowShouldClose(window))
 	{
 		// Inputs
 		ProcessInput(window);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+		//float time = sinf(glfwGetTime());
+		//
 
 		// Render
-		glClearColor(1.0, 1.0, 1.0, 1.0f);
+		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Render 
+		//glLineWidth(5.0f);
 		TriShader.use();
+		//TriShader.setFloat("timeT", cosf(timeT));
 		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, noOfDivs); //whole cirlce
+		//glDrawArrays(GL_LINE_LOOP, 0, noOfDivs); // outer line
+
+		//
 
 		// BufferSwapping and Event Tracking
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		// 
 	}
+	//
 
 	glfwTerminate();
 	return 0;
