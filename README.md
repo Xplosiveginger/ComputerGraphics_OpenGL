@@ -60,7 +60,7 @@ This guide will help you quickly set up your development environment by copying 
 
 ## Documentation
 
-- **OpenGL Documentation**: Refer to the [OpenGL documentation](https://www.opengl.org/documentation/) for learning OpenGL basics and advanced techniques.
+- **OpenGL Documentation**: Refer to the [OpenGL documentation](https://www.opengl.org/documentation/) or [LearnOpenGL](https://learnopengl.com/) for learning OpenGL basics and advanced techniques.
 - **GLFW Documentation**: Explore the [GLFW documentation](https://www.glfw.org/docs/latest/) for detailed information on GLFW functions and usage.
 - **GLAD Documentation**: Refer to the [GLAD documentation](https://github.com/Dav1dde/glad) for understanding GLAD usage and OpenGL function loading.
 
