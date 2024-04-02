@@ -51,7 +51,7 @@ int main()
 	const float radius = 0.6f;
 	const int noOfDivs = 100;
 	float angle = 0.0f;
-	float TotalAngle = 150.67825 * acos(0.0f);// 3.14158......n value
+	float TotalAngle = 2 * 2 * acos(0.0f);// 3.14158......n value // this is just me doing random numbers(150.67825 * acos(0.0f))
 	float vertices[noOfDivs * 6];
 	int i = 0;
 	float col = 0.0f;
@@ -116,8 +116,8 @@ int main()
 		TriShader.use();
 		//TriShader.setFloat("timeT", cosf(timeT));
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLE_FAN, 0, noOfDivs); //whole cirlce
-		//glDrawArrays(GL_LINE_LOOP, 0, noOfDivs); // outer line
+		//glDrawArrays(GL_TRIANGLE_FAN, 0, noOfDivs); //whole cirlce
+		glDrawArrays(GL_LINE_LOOP, 0, noOfDivs); // outer line
 
 		//
 
