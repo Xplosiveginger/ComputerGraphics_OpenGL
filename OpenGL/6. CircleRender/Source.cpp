@@ -116,8 +116,8 @@ int main()
 		TriShader.use();
 		//TriShader.setFloat("timeT", cosf(timeT));
 		glBindVertexArray(VAO);
-		//glDrawArrays(GL_TRIANGLE_FAN, 0, noOfDivs); //whole cirlce
-		glDrawArrays(GL_LINE_LOOP, 0, noOfDivs); // outer line
+		glDrawArrays(GL_TRIANGLE_FAN, 0, noOfDivs); //whole cirlce
+		//glDrawArrays(GL_LINE_LOOP, 0, noOfDivs); // outer line
 
 		//
 
