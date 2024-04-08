@@ -68,11 +68,11 @@ int main()
 		vertices[(i * 6) + 1] = yValue;
 		vertices[(i * 6) + 2] = 0.0f;
 		//RGB Values
-		vertices[(i * 6) + 3] = cosf(col * yValue);
-		vertices[(i * 6) + 4] = sinf(col * yValue * yValue);
-		vertices[(i * 6) + 5] = sinf(col * yValue * yValue * 2);
+		vertices[(i * 6) + 3] = abs(cosf(xValue));
+		vertices[(i * 6) + 4] = abs(sinf(yValue));
+		vertices[(i * 6) + 5] = sinf(yValue * 2);
 		i++;
-		col += 0.1f;
+		//col += 0.1f;
 	}
 
 	//-------------------
@@ -105,7 +105,7 @@ int main()
 		ProcessInput(window);
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		//float time = sinf(glfwGetTime());
+		float time = glfwGetTime();
 		//
 
 		// Render
@@ -114,6 +114,7 @@ int main()
 
 		//glLineWidth(5.0f);
 		TriShader.use();
+		TriShader.setFloat("timeT", time);
 		//TriShader.setFloat("timeT", cosf(timeT));
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, noOfDivs); //whole cirlce
