@@ -21,7 +21,7 @@ int main()
 	//
 
 	// Window Creation
-	GLFWwindow* window = glfwCreateWindow(scrWidth, scrHeight, "Circle Shenanigans", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(scrWidth, scrHeight, "Polygons", NULL, NULL);
 
 	if (window == NULL)
 	{
