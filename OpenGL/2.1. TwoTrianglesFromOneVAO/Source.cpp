@@ -79,7 +79,7 @@ int main()
 		ProcessInput(window);
 
 		// Render
-		glClearColor(0.6, 0.5, 0.6, 1.0f);
+		glClearColor(0.9450980392156862f, 0.054901960784313725f, 0.5686274509803921f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		TriOneShader.use();
