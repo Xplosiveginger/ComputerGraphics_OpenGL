@@ -34,8 +34,5 @@
     <None Include="vertex.shader">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="fragment_two.shader">
-      <Filter>Resource Files</Filter>
-    </None>
   </ItemGroup>
 </Project>
