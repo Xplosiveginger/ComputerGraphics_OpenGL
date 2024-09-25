@@ -84,12 +84,14 @@ int main()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+
+	// ImGui Initialization
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	ImGui::StyleColorsDark();
+	ImGui::StyleColorsDark();  // use dark theme
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	ImGui_ImplOpenGL3_Init("#version 330");
+	ImGui_ImplOpenGL3_Init("#version 330");  // set the version to the version of glsl we are using which can be found inside vertex.shader (1st line)
 
 	bool draw = true;
 	float size = 1.0f;
@@ -109,6 +111,7 @@ int main()
 		glClearColor(0.6f, 0.5f, 0.8f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		// Create a new ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -117,6 +120,7 @@ int main()
 		if(draw)
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
+		// ImGui code for the window to be drawn.
 		ImGui::Begin("I'm Test Window");
 		ImGui::Text("This is a text.");
 		ImGui::Checkbox("Draw Square", &draw);
@@ -127,6 +131,7 @@ int main()
 		myShader.setFloat("size", size);
 		myShader.setVec4("color", color);
 
+		// Render ImGui
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		
@@ -135,6 +140,7 @@ int main()
 		glfwPollEvents();
 	}
 
+	// Terminate ImGui After the application is closed.
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
