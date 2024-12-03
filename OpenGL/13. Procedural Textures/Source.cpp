@@ -10,15 +10,18 @@
 #include<CubeRender.h>
 using namespace std;
 
-const unsigned int SCR_WIDTH = 640;
-const unsigned int SCR_HEIGHT = 480;
+unsigned int SCR_WIDTH = 640;
+unsigned int SCR_HEIGHT = 480;
+
+glm::vec2 resolution = glm::vec2(SCR_WIDTH, SCR_HEIGHT);
 
 bool needColors = true;
 bool needDistance = true;
 
+void frameBufferSizeCallBack(GLFWwindow* window, int width, int height);
 void ProcessInputs(GLFWwindow* window);
 float ConvertToRGB(float val);
-void ChangeFragShader(int selectedItem, float color1[4], float color2[4], float mul);
+void ChangeFragShader(Shader shader, int selectedItem, float color1[4], float color2[4], float mul);
 
 //STARTING POINT OF OUR PROGRAM
 int main()
@@ -38,6 +41,7 @@ int main()
 	}
 
 	glfwMakeContextCurrent(window);
+	glfwSetFramebufferSizeCallback(window, frameBufferSizeCallBack);
 
 	//INITIALIZING GLAD FUNCTIONS
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -53,6 +57,7 @@ int main()
 
 	InitCubeVerts(0.0, 0.0f, 0.7f);
 
+	//Initialize ImGui (Not needed for exams)
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -60,6 +65,7 @@ int main()
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
 
+	//ImGui variables
 	bool draw = true;
 	bool useTextures = true;
 	
@@ -79,7 +85,28 @@ int main()
 		"WoodGrain" 
 	};
 	static int Selecteditem = 0;
+	//*********************************
 	
+	// PreLoading Shaders (no need for this if you are not using ImGui)
+	Shader checkerboardshader = Shader("vertex.shader", "checkerpatternfrag.shader");
+	Shader checkerboardwithcirculargradientshader = Shader("vertex.shader", "checkerboardwithcirculargradiantfrag.shader");
+	Shader circularwaveanimatedshader = Shader("vertex.shader", "circularwaveanimatedfrag.shader");
+	Shader marblepatternshader = Shader("vertex.shader", "marblepatternfrag.shader");
+	Shader noisepatternshader = Shader("vertex.shader", "noisepatternfrag.shader");
+	Shader radialgradientshader = Shader("vertex.shader", "radialgradientfrag.shader");
+	Shader stripspatternshader = Shader("vertex.shader", "stripspatternfrag.shader");
+	Shader woodgrainpatternshader = Shader("vertex.shader", "woodgrainpatternfrag.shader");
+
+	Shader shaders[] = {
+		checkerboardshader,
+		checkerboardwithcirculargradientshader,
+		circularwaveanimatedshader,
+		marblepatternshader,
+		noisepatternshader,
+		radialgradientshader,
+		stripspatternshader,
+		woodgrainpatternshader
+	};
 
 	//RENDER LOOP
 	while (!glfwWindowShouldClose(window))
@@ -95,7 +122,8 @@ int main()
 
 		if (draw)
 		{
-			ChangeFragShader(Selecteditem, color1, color2, mul);
+			// can send one shader that is shaders[Selecteditem] instead of sending the whole array.
+			ChangeFragShader(shaders[Selecteditem], Selecteditem, color1, color2, mul);
 		}
 
 		ImGui::Begin("Properties");
@@ -143,41 +171,48 @@ void ProcessInputs(GLFWwindow* window)
 	}
 }
 
-void ChangeFragShader(int selectedItem, float color1[4], float color2[4], float mul)
+void ChangeFragShader(Shader shader, int selectedItem, float color1[4], float color2[4], float mul)
 {
 	switch (selectedItem)
 	{
-		case 0: RenderCube("vertex.shader", "checkerpatternfrag.shader", color1, color2, mul);
+		case 0: RenderCube(shader, color1, color2, mul, resolution);
 			needColors = true;
 			needDistance = false;
 			break;
-		case 1: RenderCube("vertex.shader", "checkerboardwithcirculargradiantfrag.shader", color1, color2, mul);
+		case 1: RenderCube(shader, color1, color2, mul, resolution);
 			needColors = true;
 			needDistance = false;
 			break;
-		case 2: RenderCube("vertex.shader", "circularwaveanimatedfrag.shader", color1, color2, mul);
+		case 2: RenderCube(shader, color1, color2, mul, resolution);
 			needColors = true;
 			needDistance = false;
 			break;
-		case 3: RenderCube("vertex.shader", "marblepatternfrag.shader", color1, color2, mul);
+		case 3: RenderCube(shader, color1, color2, mul, resolution);
 			needColors = true;
 			needDistance = false;
 			break;
-		case 4: RenderCube("vertex.shader", "noisepatternfrag.shader", color1, color2, mul);
+		case 4: RenderCube(shader, color1, color2, mul, resolution);
 			needColors = false;
 			needDistance = false;
 			break;
-		case 5: RenderCube("vertex.shader", "radialgradientfrag.shader", color1, color2, mul);
+		case 5: RenderCube(shader, color1, color2, mul, resolution);
 			needColors = true;
 			needDistance = true;
 			break;
-		case 6: RenderCube("vertex.shader", "stripspatternfrag.shader", color1, color2, mul);
+		case 6: RenderCube(shader, color1, color2, mul, resolution);
 			needColors = true;
 			needDistance = false;
 			break;
-		case 7: RenderCube("vertex.shader", "woodgrainpatternfrag.shader", color1, color2, mul);
+		case 7: RenderCube(shader, color1, color2, mul, resolution);
 			needColors = true;
 			needDistance = false;
 			break;
 	}
+}
+
+void frameBufferSizeCallBack(GLFWwindow* window, int width, int height)
+{
+	glViewport(0, 0, width, height);
+	resolution.x = width;
+	resolution.y = height;
 }
